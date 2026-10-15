@@ -8,9 +8,11 @@ test('critical routes point to real pages', () => {
   const app = read('src/App.tsx');
   assert.match(app, /path="\/search"/);
   assert.match(app, /path="\/messages"/);
-  assert.match(app, /GeneralSuppliesPage/);
-  assert.match(app, /MaintenanceRenovationPage/);
-  assert.match(app, /LuxuryCleaningPage/);
+  for (const removed of ['MaintenanceRequest', 'MaintenanceTracking', 'MaintenanceOperations', 'MaintenanceList', 'MaintenanceWorkOrders']) {
+    assert.doesNotMatch(app, new RegExp(`const ${removed} =`));
+  }
+  assert.doesNotMatch(app, /ReceiptReviewExperience|ReceiptsPage/);
+  assert.doesNotMatch(app, /const (LuxuryFinishingPage|LuxuryCleaningPage|BrandIdentityPage|UberFixPage)\s*=/);
 });
 
 test('project files use persistent storage', () => {
