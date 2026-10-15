@@ -6,13 +6,14 @@ import { Textarea } from "@/components/ui/textarea";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Helmet } from 'react-helmet-async';
+import { supabaseConfig } from '@/integrations/supabase/config';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
 
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chatbot`;
+const CHAT_URL = `${supabaseConfig.url}/functions/v1/chatbot`;
 
 const ChatbotPage: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -42,7 +43,7 @@ const ChatbotPage: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          Authorization: `Bearer ${supabaseConfig.publishableKey}`,
         },
         body: JSON.stringify({ messages: allMessages }),
       });

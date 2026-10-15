@@ -22,6 +22,7 @@ import {
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { supabase } from "@/integrations/supabase/client";
+import { supabaseConfig } from "@/integrations/supabase/config";
 import {
   exportReviewWorkbookV2,
   openPrintableReviewReportV2,
@@ -86,7 +87,7 @@ const TOTAL = 120;
 const TOKEN_KEY = "auf-review-session-token-v1";
 const DEVICE_KEY = "auf-share-device-v1";
 const REVIEWER_KEY = "auf-reviewer-name-v1";
-const IMAGE_ENDPOINT = "https://bxuhcbfdoaflsgbxiqei.supabase.co/functions/v1/auf-receipt-image";
+const IMAGE_ENDPOINT = `${supabaseConfig.url}/functions/v1/auf-receipt-image`;
 
 const money = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
 
@@ -232,7 +233,7 @@ export default function ReceiptReviewExperience() {
       p_session_token: sessionToken,
       p_receipt_number: current.receipt_number,
     }).catch(console.error);
-  }, [current?.receipt_number, currentReview?.result, currentReview?.error_comment, loadItemNotes, rpc, sessionToken]);
+  }, [current, currentReview?.result, currentReview?.error_comment, loadItemNotes, rpc, sessionToken]);
 
   useEffect(() => {
     if (!current || !sessionToken) return;
@@ -264,7 +265,7 @@ export default function ReceiptReviewExperience() {
       controller.abort();
       if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
-  }, [current?.receipt_number, sessionToken]);
+  }, [current, sessionToken]);
 
   useEffect(() => {
     const onFullscreen = () => setFullscreen(Boolean(document.fullscreenElement));

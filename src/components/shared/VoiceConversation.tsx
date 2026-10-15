@@ -4,6 +4,7 @@ import { useConversation } from '@elevenlabs/react';
 import { Mic, MicOff, Phone, PhoneOff, Volume2, VolumeX, Keyboard, Search, Check, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabaseConfig } from '@/integrations/supabase/config';
 
 interface Voice {
   id: string;
@@ -13,15 +14,19 @@ interface Voice {
   age?: string;
 }
 
+interface ConversationMessage {
+  type?: string;
+  user_transcription_event?: { user_transcript?: string };
+  agent_response_event?: { agent_response?: string };
+  agent_response_correction_event?: { corrected_agent_response?: string };
+}
+
 interface VoiceConversationProps {
   agentId: string;
   voices: Voice[];
   onClose: () => void;
   onSwitchToChat?: () => void;
 }
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 const VoiceConversationInner: React.FC<VoiceConversationProps> = ({ agentId, voices, onClose, onSwitchToChat }) => {
   const [isConnecting, setIsConnecting] = useState(false);
@@ -36,8 +41,7 @@ const VoiceConversationInner: React.FC<VoiceConversationProps> = ({ agentId, voi
   const conversation = useConversation({
     onConnect: () => console.log('ElevenLabs connected'),
     onDisconnect: () => console.log('ElevenLabs disconnected'),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onMessage: (message: any) => {
+    onMessage: (message: ConversationMessage) => {
       if (message.type === 'user_transcript') {
         setTranscripts(prev => [...prev, { role: 'user', text: message.user_transcription_event?.user_transcript || '' }]);
       } else if (message.type === 'agent_response') {
@@ -67,12 +71,12 @@ const VoiceConversationInner: React.FC<VoiceConversationProps> = ({ agentId, voi
     setIsConnecting(true);
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
-      const resp = await fetch(`${SUPABASE_URL}/functions/v1/elevenlabs-token`, {
+      const resp = await fetch(`${supabaseConfig.url}/functions/v1/elevenlabs-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${SUPABASE_KEY}`,
+          apikey: supabaseConfig.publishableKey,
+          Authorization: `Bearer ${supabaseConfig.publishableKey}`,
         },
         body: JSON.stringify({ agentId }),
       });
