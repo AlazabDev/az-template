@@ -3,13 +3,14 @@ import { Send, Bot, User, Loader2, X, MessageSquare, Trash2, Mic, Download } fro
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import VoiceConversation from './VoiceConversation';
+import { supabaseConfig } from '@/integrations/supabase/config';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
 
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chatbot`;
+const CHAT_URL = `${supabaseConfig.url}/functions/v1/chatbot`;
 
 const ELEVENLABS_AGENT_ID = 'agent_9701knm87j4mernbr61m7yedwysn';
 const VOICES = [
@@ -91,7 +92,7 @@ const FloatingChatBot: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          Authorization: `Bearer ${supabaseConfig.publishableKey}`,
         },
         body: JSON.stringify({ messages: allMessages }),
       });

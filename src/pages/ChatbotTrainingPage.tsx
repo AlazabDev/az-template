@@ -16,6 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { supabaseConfig } from '@/integrations/supabase/config';
 
 interface KnowledgeEntry {
   id: string;
@@ -130,7 +131,7 @@ const ChatbotTrainingPage: React.FC = () => {
       formData.append('category', newCategory);
 
       const { data: { session } } = await supabase.auth.getSession();
-      const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/parse-training-file`, {
+      const resp = await fetch(`${supabaseConfig.url}/functions/v1/parse-training-file`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${session?.access_token}` },
         body: formData,

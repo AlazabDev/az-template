@@ -19,11 +19,6 @@ import Index from './pages/Index';
 import AuthPage from './pages/AuthPage';
 import NotFound from './pages/NotFound';
 
-const MaintenanceRequest = lazy(() => import('./pages/MaintenanceRequest'));
-const MaintenanceTracking = lazy(() => import('./pages/MaintenanceTracking'));
-const MaintenanceList = lazy(() => import('./pages/MaintenanceList'));
-const MaintenanceOperations = lazy(() => import('./pages/MaintenanceOperations'));
-const MaintenanceWorkOrders = lazy(() => import('./pages/MaintenanceWorkOrders'));
 const ServicesPage = lazy(() => import('./pages/ServicesPage'));
 const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
 const ProjectManagement = lazy(() => import('./pages/ProjectManagement'));
@@ -40,21 +35,9 @@ const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const SettingsPage = lazy(() => import('./pages/SettingsPage'));
 const SearchPage = lazy(() => import('./pages/SearchPage'));
 const MessagesPage = lazy(() => import('./pages/MessagesPage'));
-const ProjectsShowcase = lazy(() => import('./pages/ProjectsShowcase'));
 const MaintenanceRequestDetails = lazy(() => import('./pages/MaintenanceRequestDetails'));
 const MaintenanceReports = lazy(() => import('./pages/MaintenanceReports'));
-const ProjectStoryPage = lazy(() => import('./pages/ProjectStoryPage'));
 const ChatbotTrainingPage = lazy(() => import('./pages/ChatbotTrainingPage'));
-const LuxuryFinishingPage = lazy(() => import('./pages/services/LuxuryFinishingPage'));
-const LuxuryCleaningPage = lazy(() => import('./pages/services/LuxuryCleaningPage'));
-const BrandIdentityPage = lazy(() => import('./pages/services/BrandIdentityPage'));
-const UberFixPage = lazy(() => import('./pages/services/UberFixPage'));
-const MaintenanceRenovationPage = lazy(() => import('./pages/services/MaintenanceRenovationPage'));
-const GeneralSuppliesPage = lazy(() => import('./pages/services/GeneralSuppliesPage'));
-const UberFixSubscriptionsPage = lazy(() => import('./pages/services/UberFixSubscriptionsPage'));
-const UberFixSubscriptionRegister = lazy(() => import('./pages/services/UberFixSubscriptionRegister'));
-const UberFixSubscriptionComplete = lazy(() => import('./pages/services/UberFixSubscriptionComplete'));
-const LabanAlasfourPage = lazy(() => import('./pages/services/LabanAlasfourPage'));
 const Portfolio = lazy(() => import('./pages/Portfolio'));
 const FurnitureGallery = lazy(() => import('./pages/FurnitureGallery'));
 const PrivacyPolicyPage = lazy(() => import('./pages/legal/PrivacyPolicyPage'));
@@ -79,7 +62,6 @@ const CostCalculator = lazy(() => import('./pages/CostCalculator'));
 const AdminContentManager = lazy(() => import('./pages/AdminContentManager'));
 const AdminServerDashboard = lazy(() => import('./pages/AdminServerDashboard'));
 const TikTokLinkPage = lazy(() => import('./pages/TikTokLinkPage'));
-const ReceiptsPage = lazy(() => import('./pages/ReceiptsPage'));
 const FormsManagerPage = lazy(() => import('./pages/FormsManagerPage'));
 const ContentSectionPage = lazy(() => import('./content/lib/ContentPages').then((m) => ({ default: m.ContentSectionPage })));
 const ContentArticlePage = lazy(() => import('./content/lib/ContentPages').then((m) => ({ default: m.ContentArticlePage })));
@@ -127,8 +109,6 @@ function App() {
 
                       <Route element={<PublicShell />}>
                         <Route path="/" element={<Index />} />
-                        <Route path="/maintenance-request" element={<MaintenanceRequest />} />
-                        <Route path="/maintenance-tracking" element={<MaintenanceTracking />} />
                         <Route path="/services" element={<ServicesPage />} />
                         <Route path="/cost-calculator" element={<CostCalculator />} />
                         <Route path="/fm" element={<FormsManagerPage />} />
@@ -138,18 +118,6 @@ function App() {
                         <Route path="/contact" element={<ContactPage />} />
                         <Route path="/ceo" element={<CEOPage />} />
                         <Route path="/chatbot" element={<ChatbotPage />} />
-                        <Route path="/projects-gallery" element={<ProjectsShowcase />} />
-                        <Route path="/projects-gallery/:projectId" element={<ProjectStoryPage />} />
-                        <Route path="/services/luxury-finishing" element={<LuxuryFinishingPage />} />
-                        <Route path="/services/luxury-cleaning" element={<LuxuryCleaningPage />} />
-                        <Route path="/services/brand-identity" element={<BrandIdentityPage />} />
-                        <Route path="/services/uberfix" element={<UberFixPage />} />
-                        <Route path="/services/maintenance-renovation" element={<MaintenanceRenovationPage />} />
-                        <Route path="/services/general-supplies" element={<GeneralSuppliesPage />} />
-                        <Route path="/services/laban-alasfour" element={<LabanAlasfourPage />} />
-                        <Route path="/uberfix-subscriptions" element={<UberFixSubscriptionsPage />} />
-                        <Route path="/uberfix-subscriptions/register" element={<UberFixSubscriptionRegister />} />
-                        <Route path="/uberfix-subscriptions/complete" element={<UberFixSubscriptionComplete />} />
                         <Route path="/portfolio" element={<Portfolio />} />
                         <Route path="/furniture-gallery" element={<FurnitureGallery />} />
                         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
@@ -183,12 +151,7 @@ function App() {
                         <Route path="/pn" element={<PNPage />} />
                         <Route path="/search" element={protectedPage(<SearchPage />)} />
                         <Route path="/messages" element={protectedPage(<MessagesPage />)} />
-                        <Route path="/maintenance" element={protectedPage(<MaintenanceOperations />)} />
-                        <Route path="/maintenance/requests" element={protectedPage(<MaintenanceList />)} />
-                        <Route path="/maintenance/work-orders" element={protectedPage(<MaintenanceWorkOrders />)} />
-                        <Route path="/maintenance/receipts" element={protectedPage(<ReceiptsPage />)} />
                         <Route path="/maintenance/reports" element={protectedPage(<MaintenanceReports />)} />
-                        <Route path="/maintenance-list" element={protectedPage(<MaintenanceList />)} />
                         <Route path="/project-management" element={protectedPage(<ProjectManagement />)} />
                         <Route path="/projects/:projectId" element={protectedPage(<ProjectDetails />)} />
                         <Route path="/dashboard" element={protectedPage(<DashboardPage />)} />
@@ -197,7 +160,6 @@ function App() {
                         <Route path="/maintenance-request-details/:id" element={protectedPage(<MaintenanceRequestDetails />)} />
                         <Route path="/maintenance-reports" element={protectedPage(<MaintenanceReports />)} />
                         <Route path="/whatsapp-setup" element={<WhatsAppSetupPage />} />
-                        <Route path="/receipts" element={<ReceiptsPage />} />
                       </Route>
 
                       <Route element={<AdminShell />}>
