@@ -167,7 +167,7 @@ const Projects: React.FC = () => {
                         <span className="text-sm bg-white/20 backdrop-blur-sm px-3 py-2 rounded-lg">العميل: {project.client}</span>
                       </div>
                       <Link 
-                        to={`/projects-gallery/${project.id}`} 
+                        to={`/projects/${project.id}`}
                         className="flex items-center gap-2 bg-white text-construction-primary font-bold py-3 px-6 rounded-lg transition-all hover:bg-construction-accent hover:text-white self-start group-hover:scale-105"
                         aria-label={`عرض تفاصيل مشروع ${project.title}`}
                       >
@@ -203,7 +203,7 @@ const Projects: React.FC = () => {
                     role="listitem"
                   >
                     <Link 
-                      to={`/projects-gallery/${project.id}`}
+                      to={`/projects/${project.id}`}
                       aria-label={`عرض تفاصيل مشروع ${project.title}`}
                     >
                       <LazyImage 
@@ -254,7 +254,7 @@ const Projects: React.FC = () => {
         
         {filteredProjects.length > 0 && (
           <div className="text-center mt-16">
-            <Link to="/projects-gallery">
+            <Link to="/projects">
               <Button className="bg-construction-primary hover:bg-construction-dark text-white py-3 px-8 text-lg">
                 عرض جميع المشاريع
                 <ArrowLeft className="mr-2" size={18} aria-hidden="true" />

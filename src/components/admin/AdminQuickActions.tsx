@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Plus, 
-  FileText, 
   Users, 
   Settings, 
   BarChart3, 
@@ -19,14 +18,6 @@ const quickActions = [
     path: "/project-management",
     color: "var(--azab-primary)",
     bgColor: "rgba(26, 54, 93, 0.1)"
-  },
-  {
-    title: "طلب صيانة",
-    description: "إنشاء طلب صيانة جديد",
-    icon: FileText,
-    path: "/maintenance-request",
-    color: "var(--azab-accent)",
-    bgColor: "rgba(245, 158, 11, 0.1)"
   },
   {
     title: "إدارة المستخدمين",

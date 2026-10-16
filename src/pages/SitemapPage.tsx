@@ -44,10 +44,6 @@ const internalSections: SitemapSection[] = [
     accent: "from-amber-500/10 to-amber-600/5",
     links: [
       { to: "/services", label: "جميع الخدمات" },
-      { to: "/services/luxury-finishing", label: "التشطيبات الفاخرة" },
-      { to: "/services/uberfix", label: "UberFix - الصيانة والتجديد" },
-      { to: "/services/brand-identity", label: "الهوية البصرية" },
-      { to: "/services/laban-alasfour", label: "لبن العصفور للتوريدات" },
     ],
   },
   {
@@ -57,7 +53,6 @@ const internalSections: SitemapSection[] = [
     accent: "from-emerald-500/10 to-emerald-600/5",
     links: [
       { to: "/projects", label: "المشاريع" },
-      { to: "/projects-gallery", label: "معرض المشاريع" },
       { to: "/portfolio", label: "البورتفوليو" },
       { to: "/furniture-gallery", label: "معرض الأثاث" },
     ],
@@ -68,8 +63,6 @@ const internalSections: SitemapSection[] = [
     description: "الطلبات والدعم والتواصل",
     accent: "from-violet-500/10 to-violet-600/5",
     links: [
-      { to: "/maintenance-request", label: "طلب صيانة" },
-      { to: "/maintenance-tracking", label: "تتبع طلب الصيانة" },
       { to: "/chatbot", label: "المساعد الذكي" },
       { to: "/auth", label: "تسجيل الدخول" },
       { to: "/facebook", label: "صفحة فيسبوك" },

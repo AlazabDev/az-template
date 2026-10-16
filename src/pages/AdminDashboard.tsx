@@ -25,9 +25,9 @@ const AdminDashboard: React.FC = () => {
           <div className="animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <AdminStatsGrid
               totalProjects={data.totalProjects}
-              pendingMaintenance={data.pendingMaintenance}
-              completedTasks={data.completedTasks}
               activeProjects={data.activeProjects}
+              completedProjects={data.completedProjects}
+              planningProjects={data.planningProjects}
               isLoading={isLoading}
             />
           </div>

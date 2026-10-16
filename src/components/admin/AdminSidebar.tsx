@@ -3,14 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   Building,
-  Wrench,
   Users,
   FileText,
-  BarChart3,
   Settings,
   HelpCircle,
-  Folder,
-  Calendar,
   MessageSquare,
   Webhook,
   Music2
@@ -36,30 +32,6 @@ const menuItems = [
     badge: 'جديد'
   },
   {
-    title: 'طلبات الصيانة',
-    icon: Wrench,
-    path: '/maintenance-list',
-    badge: '8'
-  },
-  {
-    title: 'المستخدمين',
-    icon: Users,
-    path: '/users-management',
-    badge: null
-  },
-  {
-    title: 'التقارير',
-    icon: BarChart3,
-    path: '/reports',
-    badge: null
-  },
-  {
-    title: 'الملفات',
-    icon: Folder,
-    path: '/files-management',
-    badge: null
-  },
-  {
     title: 'الرسائل',
     icon: MessageSquare,
     path: '/messages',
@@ -69,12 +41,6 @@ const menuItems = [
     title: 'مراقبة الويب هوك',
     icon: Webhook,
     path: '/webhook-monitor',
-    badge: null
-  },
-  {
-    title: 'التقويم',
-    icon: Calendar,
-    path: '/calendar',
     badge: null
   },
   {
@@ -92,7 +58,7 @@ const menuItems = [
   {
     title: 'المساعدة',
     icon: HelpCircle,
-    path: '/help',
+    path: '/contact',
     badge: null
   }
 ];
@@ -167,7 +133,7 @@ export const AdminSidebar: React.FC = () => {
               <span className="font-medium">12</span>
             </div>
             <div className="flex justify-between">
-              <span>طلبات معلقة</span>
+              <span>مشاريع قيد التخطيط</span>
               <span className="font-medium">8</span>
             </div>
             <div className="flex justify-between">

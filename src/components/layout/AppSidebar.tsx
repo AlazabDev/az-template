@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, Settings, User, Wrench, ClipboardList, FolderOpen, MessageSquare, Search, ListChecks } from 'lucide-react';
+import { Home, Settings, User, Wrench, FolderOpen, MessageSquare, Search, ListChecks } from 'lucide-react';
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
   SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter,
@@ -11,7 +11,6 @@ import { useUserProfile } from '@/contexts/UserProfileContext';
 const navigationItems = [
   { title: 'الرئيسية', url: '/dashboard', icon: Home },
   { title: 'البحث', url: '/search', icon: Search },
-  { title: 'طلبات الصيانة', url: '/maintenance-list', icon: ClipboardList },
   { title: 'المشاريع', url: '/project-management', icon: FolderOpen },
   { title: 'PN | ملاحظات المشروعات', url: '/pn', icon: ListChecks },
   { title: 'الرسائل', url: '/messages', icon: MessageSquare },

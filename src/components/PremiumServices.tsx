@@ -17,7 +17,7 @@ const premiumServices = [
     descriptionEn: "Villa & duplex finishing on a 5-stage system (office session through 2-year warranty), with Jotun paints, KNX smart systems, Carrara marble and an on-site project manager.",
     color: "bg-amber-50 text-amber-700",
     gradient: "from-amber-600 to-amber-800",
-    route: "/services/luxury-finishing"
+    route: "/services"
   },
   {
     id: "brand-identity",
@@ -30,7 +30,7 @@ const premiumServices = [
     descriptionEn: "Full Retail/F&B fit-out in 21 days: translating your Brand Book into shop drawings, executing décor and lighting, and handing over a ready-to-open branch (reference: Abu Auf chain).",
     color: "bg-purple-50 text-purple-600",
     gradient: "from-purple-600 to-purple-800",
-    route: "/services/brand-identity"
+    route: "/services"
   },
   {
     id: "uberfix",
@@ -43,7 +43,7 @@ const premiumServices = [
     descriptionEn: "Monthly + emergency maintenance contracts for branch chains: 2-hour response, thermal-camera leak detection, Schneider panel & Legrand part replacement, and a PDF report after every visit.",
     color: "bg-orange-50 text-orange-600",
     gradient: "from-orange-600 to-orange-800",
-    route: "/services/uberfix"
+    route: "/services"
   },
   {
     id: "laban-alasfour",
@@ -56,7 +56,7 @@ const premiumServices = [
     descriptionEn: "Sourcing rare materials from 6 countries (Italy, Spain, Brazil…): PDLC smart glass, FSC woods, natural marble and Grohe/Hansgrohe fixtures — with full tax invoice and customs clearance.",
     color: "bg-blue-50 text-blue-600",
     gradient: "from-blue-600 to-blue-800",
-    route: "/services/laban-alasfour"
+    route: "/services"
   },
 ];
 

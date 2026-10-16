@@ -74,7 +74,7 @@ const websiteSchema = {
   "inLanguage": ["ar", "en"],
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://alazab.com/projects-gallery?q={search_term_string}",
+    "target": "https://alazab.com/projects?q={search_term_string}",
     "query-input": "required name=search_term_string"
   }
 };

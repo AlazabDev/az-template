@@ -35,8 +35,6 @@ const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const SettingsPage = lazy(() => import('./pages/SettingsPage'));
 const SearchPage = lazy(() => import('./pages/SearchPage'));
 const MessagesPage = lazy(() => import('./pages/MessagesPage'));
-const MaintenanceRequestDetails = lazy(() => import('./pages/MaintenanceRequestDetails'));
-const MaintenanceReports = lazy(() => import('./pages/MaintenanceReports'));
 const ChatbotTrainingPage = lazy(() => import('./pages/ChatbotTrainingPage'));
 const Portfolio = lazy(() => import('./pages/Portfolio'));
 const FurnitureGallery = lazy(() => import('./pages/FurnitureGallery'));
@@ -151,14 +149,11 @@ function App() {
                         <Route path="/pn" element={<PNPage />} />
                         <Route path="/search" element={protectedPage(<SearchPage />)} />
                         <Route path="/messages" element={protectedPage(<MessagesPage />)} />
-                        <Route path="/maintenance/reports" element={protectedPage(<MaintenanceReports />)} />
                         <Route path="/project-management" element={protectedPage(<ProjectManagement />)} />
                         <Route path="/projects/:projectId" element={protectedPage(<ProjectDetails />)} />
                         <Route path="/dashboard" element={protectedPage(<DashboardPage />)} />
                         <Route path="/profile" element={protectedPage(<ProfilePage />)} />
                         <Route path="/settings" element={protectedPage(<SettingsPage />)} />
-                        <Route path="/maintenance-request-details/:id" element={protectedPage(<MaintenanceRequestDetails />)} />
-                        <Route path="/maintenance-reports" element={protectedPage(<MaintenanceReports />)} />
                         <Route path="/whatsapp-setup" element={<WhatsAppSetupPage />} />
                       </Route>
 

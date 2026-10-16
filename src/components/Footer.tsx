@@ -89,10 +89,9 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-bold mb-5 text-white border-b border-construction-accent/30 pb-2">خدماتنا</h3>
             <ul className="space-y-3 text-gray-300 text-sm">
               {[
-                { to: '/services/luxury-finishing', label: 'التشطيب الراقي' },
-                { to: '/services/brand-identity', label: 'هوية العلامة التجارية' },
-                { to: '/services/uberfix', label: 'أوبرفيكس - الصيانة المعمارية' },
-                { to: '/services/laban-alasfour', label: 'لبن العصفور - التوريدات' },
+                { to: '/services', label: 'جميع الخدمات' },
+                { to: '/projects', label: 'إدارة وتنفيذ المشاريع' },
+                { to: '/furniture-gallery', label: 'معرض الأثاث' },
               ].map((service) => (
                 <li key={service.to}>
                   <Link to={service.to} className="flex items-center gap-2 hover:text-construction-accent transition-colors">

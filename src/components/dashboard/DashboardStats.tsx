@@ -1,20 +1,20 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Building2, Wrench, CheckCircle, Clock } from "lucide-react";
+import { Building2, CheckCircle, Clock, ListChecks } from "lucide-react";
 
 interface DashboardStatsProps {
   totalProjects: number;
-  pendingMaintenance: number;
-  completedTasks: number;
   activeProjects: number;
+  completedProjects: number;
+  planningProjects: number;
 }
 
 const DashboardStats: React.FC<DashboardStatsProps> = ({
   totalProjects,
-  pendingMaintenance,
-  completedTasks,
-  activeProjects
+  activeProjects,
+  completedProjects,
+  planningProjects
 }) => {
   const stats = [
     {
@@ -24,14 +24,14 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({
       color: "text-blue-600"
     },
     {
-      title: "طلبات الصيانة المعلقة",
-      value: pendingMaintenance,
-      icon: Wrench,
+      title: "المشاريع قيد التخطيط",
+      value: planningProjects,
+      icon: ListChecks,
       color: "text-yellow-600"
     },
     {
-      title: "المهام المكتملة",
-      value: completedTasks,
+      title: "المشاريع المكتملة",
+      value: completedProjects,
       icon: CheckCircle,
       color: "text-green-600"
     },

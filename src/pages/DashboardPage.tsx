@@ -17,9 +17,9 @@ const DashboardPage: React.FC = () => {
         
         <DashboardStats
           totalProjects={data.totalProjects}
-          pendingMaintenance={data.pendingMaintenance}
-          completedTasks={data.completedTasks}
           activeProjects={data.activeProjects}
+          completedProjects={data.completedProjects}
+          planningProjects={data.planningProjects}
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

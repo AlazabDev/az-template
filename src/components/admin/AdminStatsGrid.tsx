@@ -1,19 +1,19 @@
 import React from 'react';
-import { Building2, Wrench, CheckCircle, Clock, TrendingUp, AlertCircle } from 'lucide-react';
+import { Building2, CheckCircle, Clock, ListChecks, TrendingUp } from 'lucide-react';
 
 interface AdminStatsGridProps {
   totalProjects: number;
-  pendingMaintenance: number;
-  completedTasks: number;
   activeProjects: number;
+  completedProjects: number;
+  planningProjects: number;
   isLoading: boolean;
 }
 
 export const AdminStatsGrid: React.FC<AdminStatsGridProps> = ({
   totalProjects,
-  pendingMaintenance,
-  completedTasks,
   activeProjects,
+  completedProjects,
+  planningProjects,
   isLoading
 }) => {
   const stats = [
@@ -27,17 +27,17 @@ export const AdminStatsGrid: React.FC<AdminStatsGridProps> = ({
       changeType: "positive"
     },
     {
-      title: "طلبات الصيانة المعلقة",
-      value: pendingMaintenance,
-      icon: Wrench,
+      title: "المشاريع قيد التخطيط",
+      value: planningProjects,
+      icon: ListChecks,
       color: "var(--azab-warning)",
       bgColor: "rgba(245, 158, 11, 0.1)",
       change: "-5%",
       changeType: "negative"
     },
     {
-      title: "المهام المكتملة",
-      value: completedTasks,
+      title: "المشاريع المكتملة",
+      value: completedProjects,
       icon: CheckCircle,
       color: "var(--azab-success)",
       bgColor: "rgba(16, 185, 129, 0.1)",

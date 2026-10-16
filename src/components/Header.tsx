@@ -22,10 +22,7 @@ const Header: React.FC = () => {
   const { user } = useAuth();
 
   const productionLines = [
-    { name: t('التشطيب الراقي (Luxury Finishing)', 'Luxury Finishing'), href: '/services/luxury-finishing' },
-    { name: t('هوية العلامة التجارية (Brand Identity)', 'Brand Identity'), href: '/services/brand-identity' },
-    { name: t('أوبرفيكس (UberFix) - حلول الصيانة المعمارية', 'UberFix - Architectural Maintenance'), href: '/services/uberfix' },
-    { name: t('لبن العصفور (Laban Alasfour) - توريدات الخامات', 'Laban Alasfour - Raw Materials Supply'), href: '/services/laban-alasfour' },
+    { name: t('جميع الخدمات', 'All Services'), href: '/services' },
   ];
 
   const navigationItems = [
@@ -126,7 +123,6 @@ const Header: React.FC = () => {
                   ))}
 
                   <div className="mt-3 space-y-2 border-t pt-5">
-                    <Link to="/maintenance-request" onClick={() => setIsMenuOpen(false)}><Button className="w-full">طلب صيانة</Button></Link>
                     {user ? (
                       <>
                         <Link to="/profile" onClick={() => setIsMenuOpen(false)}><Button variant="outline" className="w-full"><User className="me-2 h-4 w-4" />الملف الشخصي</Button></Link>

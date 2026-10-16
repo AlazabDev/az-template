@@ -72,7 +72,7 @@ const mainSections: SidebarSection[] = [
     items: [
       { title: "الرئيسية", href: "/", icon: Home, description: "العودة للصفحة الرئيسية" },
       { title: "خدماتنا", href: "/services", icon: Wrench, description: "تصفح جميع خدماتنا" },
-      { title: "مشاريعنا", href: "/projects-gallery", icon: Building, description: "معرض المشاريع المنجزة" },
+      { title: "مشاريعنا", href: "/projects", icon: Building, description: "إدارة المشاريع الحالية" },
       { title: "معرض الأثاث", href: "/furniture-gallery", icon: Camera, description: "أثاث وتصميم داخلي فاخر", badge: "جديد" },
       { title: "نماذج العمل", href: "/fm", icon: FileText, description: "تحميل نماذج الصيانة والتوريد والتشغيل", badge: "جديد" },
       { title: "من نحن", href: "/about", icon: Users, description: "تعرف على شركتنا" },
@@ -83,8 +83,6 @@ const mainSections: SidebarSection[] = [
     title: "الخدمات التفاعلية",
     items: [
       { title: "الشات بوت", href: "/chatbot", icon: MessageSquare, description: "مساعد ذكي للإجابة على استفساراتك" },
-      { title: "طلب صيانة", href: "/maintenance-request", icon: Wrench, description: "تقديم طلب صيانة جديد", badge: "جديد" },
-      { title: "تتبع الطلبات", href: "/maintenance-tracking", icon: Search, description: "تتبع حالة طلبات الصيانة" },
       { title: "حاسبة التكلفة", href: "/cost-calculator", icon: Calculator, description: "تقدير تكلفة مشروعك في 3 خطوات", badge: "جديد" },
     ]
   },
@@ -95,7 +93,6 @@ const mainSections: SidebarSection[] = [
       { title: "لوحة التحكم", href: "/dashboard", icon: TrendingUp, description: "إحصائيات ونظرة عامة" },
       { title: "لوحة الإدارة", href: "/admin-dashboard", icon: Settings, description: "لوحة تحكم المسؤول" },
       { title: "إدارة المشاريع", href: "/project-management", icon: Briefcase, description: "إدارة المشاريع الجارية" },
-      { title: "قائمة الصيانة", href: "/maintenance-list", icon: FileText, description: "جميع طلبات الصيانة" },
       { title: "الملف الشخصي", href: "/profile", icon: User, description: "إعدادات الحساب الشخصي" },
       { title: "الإعدادات", href: "/settings", icon: Settings, description: "إعدادات النظام" },
     ]
