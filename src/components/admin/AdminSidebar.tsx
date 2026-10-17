@@ -9,7 +9,8 @@ import {
   HelpCircle,
   MessageSquare,
   Webhook,
-  Music2
+  Music2,
+  Link2
 } from 'lucide-react';
 
 const menuItems = [
@@ -29,6 +30,12 @@ const menuItems = [
     title: 'إدارة المحتوى',
     icon: FileText,
     path: '/admin/content',
+    badge: 'جديد'
+  },
+  {
+    title: 'اختصار الروابط',
+    icon: Link2,
+    path: '/link-shortener',
     badge: 'جديد'
   },
   {

@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      short_links: {
+        Row: {
+          id: string
+          slug: string
+          target_url: string
+          title: string | null
+          is_active: boolean
+          clicks: number
+          last_clicked_at: string | null
+          created_by: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          target_url: string
+          title?: string | null
+          is_active?: boolean
+          clicks?: number
+          last_clicked_at?: string | null
+          created_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          target_url?: string
+          title?: string | null
+          is_active?: boolean
+          clicks?: number
+          last_clicked_at?: string | null
+          created_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       admin_notifications: {
         Row: {
           created_at: string
@@ -4468,6 +4507,7 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: never; Returns: boolean }
+      resolve_short_link: { Args: { p_slug: string }; Returns: { target_url: string }[] }
       log_security_event: {
         Args: {
           _actor_email?: string

@@ -61,6 +61,8 @@ const AdminContentManager = lazy(() => import('./pages/AdminContentManager'));
 const AdminServerDashboard = lazy(() => import('./pages/AdminServerDashboard'));
 const TikTokLinkPage = lazy(() => import('./pages/TikTokLinkPage'));
 const FormsManagerPage = lazy(() => import('./pages/FormsManagerPage'));
+const LinkShortenerPage = lazy(() => import('./pages/LinkShortenerPage'));
+const ShortLinkRedirectPage = lazy(() => import('./pages/ShortLinkRedirectPage'));
 const ContentSectionPage = lazy(() => import('./content/lib/ContentPages').then((m) => ({ default: m.ContentSectionPage })));
 const ContentArticlePage = lazy(() => import('./content/lib/ContentPages').then((m) => ({ default: m.ContentArticlePage })));
 
@@ -143,6 +145,7 @@ function App() {
                         <Route path="/maintenance-services/:slug" element={<ContentArticlePage section="services" />} />
                         <Route path="/services/:slug" element={<ContentArticlePage section="services" />} />
                         <Route path="/tiktok-link" element={<TikTokLinkPage />} />
+                        <Route path="/:slug" element={<ShortLinkRedirectPage />} />
                       </Route>
 
                       <Route element={<OperationalShell />}>
@@ -167,6 +170,7 @@ function App() {
                         <Route path="/webhook-monitor" element={adminPage(<WebhookMonitorPage />)} />
                         <Route path="/meta-accounts" element={adminPage(<MetaAccountsPage />)} />
                         <Route path="/internal-webhook" element={adminPage(<InternalWebhookPage />)} />
+                        <Route path="/link-shortener" element={adminPage(<LinkShortenerPage />)} />
                       </Route>
 
                       <Route path="*" element={<NotFound />} />
