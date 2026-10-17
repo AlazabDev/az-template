@@ -1,5 +1,5 @@
 import React, { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { Copy, ExternalLink, Link2, Loader2, Plus, Power, Trash2 } from 'lucide-react';
+import { Copy, Edit3, ExternalLink, Link2, Loader2, Plus, Power, Save, Trash2, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { AdminDashboardLayout } from '@/components/admin/AdminDashboardLayout';
 import { Badge } from '@/components/ui/badge';
@@ -36,6 +36,7 @@ const LinkShortenerPage: React.FC = () => {
   const [slug, setSlug] = useState('');
   const [title, setTitle] = useState('');
   const [isActive, setIsActive] = useState(true);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -46,11 +47,8 @@ const LinkShortenerPage: React.FC = () => {
       .select('id, slug, target_url, title, is_active, clicks, last_clicked_at, created_at')
       .order('created_at', { ascending: false });
 
-    if (error) {
-      toast.error('تعذر تحميل اختصارات الروابط');
-    } else {
-      setLinks((data || []) as ShortLink[]);
-    }
+    if (error) toast.error('تعذر تحميل اختصارات الروابط');
+    else setLinks((data || []) as ShortLink[]);
     setIsLoading(false);
   }, []);
 
@@ -68,6 +66,21 @@ const LinkShortenerPage: React.FC = () => {
     setSlug('');
     setTitle('');
     setIsActive(true);
+    setEditingId(null);
+  };
+
+  const startEditing = (link: ShortLink) => {
+    setEditingId(link.id);
+    setTargetUrl(link.target_url);
+    setSlug(link.slug);
+    setTitle(link.title || '');
+    setIsActive(link.is_active);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const cancelEditing = () => {
+    resetForm();
+    toast.info('تم إلغاء التعديل');
   };
 
   const handleSubmit = async (event: FormEvent) => {
@@ -93,20 +106,23 @@ const LinkShortenerPage: React.FC = () => {
     }
 
     setIsSaving(true);
-    const { error } = await supabase.from('short_links').insert({
+    const payload = {
       target_url: cleanUrl,
       slug: cleanSlug,
       title: title.trim() || null,
       is_active: isActive,
-    });
+    };
+    const { error } = editingId
+      ? await supabase.from('short_links').update(payload).eq('id', editingId)
+      : await supabase.from('short_links').insert(payload);
     setIsSaving(false);
 
     if (error) {
-      toast.error(error.code === '23505' ? 'هذا الاختصار مستخدم بالفعل' : 'تعذر إنشاء الاختصار');
+      toast.error(error.code === '23505' ? 'هذا الاختصار مستخدم بالفعل' : editingId ? 'تعذر تحديث الرابط' : 'تعذر إنشاء الاختصار');
       return;
     }
 
-    toast.success(`تم إنشاء الرابط ${SITE_ORIGIN}/${cleanSlug}`);
+    toast.success(editingId ? 'تم تحديث الرابط المختصر' : `تم إنشاء الرابط ${SITE_ORIGIN}/${cleanSlug}`);
     resetForm();
     await loadLinks();
   };
@@ -127,6 +143,7 @@ const LinkShortenerPage: React.FC = () => {
       toast.error('تعذر حذف الاختصار');
       return;
     }
+    if (editingId === link.id) resetForm();
     setLinks((current) => current.filter((item) => item.id !== link.id));
     toast.success('تم حذف الاختصار');
   };
@@ -140,14 +157,14 @@ const LinkShortenerPage: React.FC = () => {
     <AdminDashboardLayout>
       <div className="container mx-auto space-y-8 p-6" dir="rtl">
         <div>
-          <h1 className="text-3xl font-bold text-construction-primary">اختصار الروابط</h1>
-          <p className="mt-2 text-muted-foreground">أنشئ روابط قصيرة قابلة للتخصيص مثل {SITE_ORIGIN}/apk03 أو {SITE_ORIGIN}/هنا.</p>
+          <h1 className="text-3xl font-bold text-construction-primary">إدارة الروابط المختصرة</h1>
+          <p className="mt-2 text-muted-foreground">إنشاء وتعديل وحذف روابط مثل {SITE_ORIGIN}/apk03 أو {SITE_ORIGIN}/هنا.</p>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><Plus className="h-5 w-5" /> إنشاء رابط مختصر</CardTitle>
-            <CardDescription>سيتم تحويل الزائر إلى الرابط الأصلي مع تسجيل عدد النقرات.</CardDescription>
+            <CardTitle className="flex items-center gap-2">{editingId ? <Edit3 className="h-5 w-5" /> : <Plus className="h-5 w-5" />} {editingId ? 'تعديل الرابط المختصر' : 'إنشاء رابط مختصر'}</CardTitle>
+            <CardDescription>{editingId ? 'عدّل بيانات الرابط مع الحفاظ على إحصائيات النقرات الحالية.' : 'سيتم تحويل الزائر إلى الرابط الأصلي مع تسجيل عدد النقرات.'}</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="grid gap-5 md:grid-cols-2">
@@ -168,16 +185,19 @@ const LinkShortenerPage: React.FC = () => {
                 <Switch id="active-link" checked={isActive} onCheckedChange={setIsActive} />
                 <Label htmlFor="active-link">تفعيل الرابط فورًا</Label>
               </div>
-              <Button type="submit" disabled={isSaving} className="w-fit">
-                {isSaving ? <Loader2 className="ml-2 h-4 w-4 animate-spin" /> : <Link2 className="ml-2 h-4 w-4" />}
-                إنشاء الاختصار
-              </Button>
+              <div className="flex flex-wrap gap-2">
+                <Button type="submit" disabled={isSaving} className="w-fit">
+                  {isSaving ? <Loader2 className="ml-2 h-4 w-4 animate-spin" /> : editingId ? <Save className="ml-2 h-4 w-4" /> : <Link2 className="ml-2 h-4 w-4" />}
+                  {editingId ? 'حفظ التعديلات' : 'إنشاء الاختصار'}
+                </Button>
+                {editingId && <Button type="button" variant="outline" onClick={cancelEditing} disabled={isSaving}><X className="ml-2 h-4 w-4" /> إلغاء</Button>}
+              </div>
             </form>
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader><CardTitle>الروابط المنشورة</CardTitle><CardDescription>يمكنك تعطيل أي رابط دون حذفه.</CardDescription></CardHeader>
+          <CardHeader><CardTitle>الروابط المنشورة</CardTitle><CardDescription>يمكنك تعديل البيانات، تعطيل الرابط مؤقتًا، أو حذفه نهائيًا.</CardDescription></CardHeader>
           <CardContent>
             {isLoading ? (
               <div className="flex justify-center py-10"><Loader2 className="h-6 w-6 animate-spin" /></div>
@@ -199,7 +219,7 @@ const LinkShortenerPage: React.FC = () => {
                         <TableCell className="max-w-72 truncate" dir="ltr" title={link.target_url}>{link.target_url}</TableCell>
                         <TableCell>{link.clicks.toLocaleString('ar-EG')}</TableCell>
                         <TableCell><Badge variant={link.is_active ? 'default' : 'secondary'}>{link.is_active ? 'نشط' : 'متوقف'}</Badge></TableCell>
-                        <TableCell><div className="flex gap-1"><Button variant="ghost" size="icon" onClick={() => void copyLink(link.slug)} aria-label="نسخ الرابط"><Copy className="h-4 w-4" /></Button><Button variant="ghost" size="icon" onClick={() => void toggleLink(link)} aria-label="تفعيل أو تعطيل الرابط"><Power className="h-4 w-4" /></Button><Button variant="ghost" size="icon" className="text-destructive" onClick={() => void deleteLink(link)} aria-label="حذف الرابط"><Trash2 className="h-4 w-4" /></Button></div></TableCell>
+                        <TableCell><div className="flex gap-1"><Button variant="ghost" size="icon" onClick={() => startEditing(link)} aria-label="تعديل الرابط"><Edit3 className="h-4 w-4" /></Button><Button variant="ghost" size="icon" onClick={() => void copyLink(link.slug)} aria-label="نسخ الرابط"><Copy className="h-4 w-4" /></Button><Button variant="ghost" size="icon" onClick={() => void toggleLink(link)} aria-label="تفعيل أو تعطيل الرابط"><Power className="h-4 w-4" /></Button><Button variant="ghost" size="icon" className="text-destructive" onClick={() => void deleteLink(link)} aria-label="حذف الرابط"><Trash2 className="h-4 w-4" /></Button></div></TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
