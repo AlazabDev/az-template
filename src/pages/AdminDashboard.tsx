@@ -5,6 +5,7 @@ import { AdminStatsGrid } from '@/components/admin/AdminStatsGrid';
 import { AdminRecentActivity } from '@/components/admin/AdminRecentActivity';
 import { AdminQuickActions } from '@/components/admin/AdminQuickActions';
 import { AdminSystemOverview } from '@/components/admin/AdminSystemOverview';
+import { AdminShortLinksOverview } from '@/components/admin/AdminShortLinksOverview';
 import { useAuth } from '@/hooks/useAuth';
 import { useDashboardData } from '@/hooks/useDashboardData';
 
@@ -30,6 +31,10 @@ const AdminDashboard: React.FC = () => {
               planningProjects={data.planningProjects}
               isLoading={isLoading}
             />
+          </div>
+
+          <div className="animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+            <AdminShortLinksOverview />
           </div>
 
           {/* Main Content Grid */}
