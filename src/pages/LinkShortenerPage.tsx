@@ -24,6 +24,11 @@ type ShortLink = {
 
 const SITE_ORIGIN = 'https://alazab.com';
 const slugPattern = /^[\p{L}\p{N}_-]{2,64}$/u;
+const reservedSlugs = new Set([
+  'auth', 'services', 'projects', 'portfolio', 'about', 'contact', 'dashboard', 'admin-dashboard',
+  'link-shortener', 'search', 'messages', 'settings', 'sitemap', 'blogs', 'knowledge', 'guidance',
+  'faq', 'chatbot', 'profile', 'cost-calculator', 'furniture-gallery',
+]);
 
 const LinkShortenerPage: React.FC = () => {
   const [links, setLinks] = useState<ShortLink[]>([]);
@@ -80,6 +85,10 @@ const LinkShortenerPage: React.FC = () => {
 
     if (!slugPattern.test(cleanSlug)) {
       toast.error('الاختصار يجب أن يكون من حرفين إلى 64 حرفًا، دون مسافات أو / أو ? أو #');
+      return;
+    }
+    if (reservedSlugs.has(cleanSlug.toLocaleLowerCase())) {
+      toast.error('هذا الاسم محجوز لمسار أساسي في الموقع، اختر اختصارًا آخر');
       return;
     }
 
