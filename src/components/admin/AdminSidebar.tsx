@@ -10,7 +10,8 @@ import {
   MessageSquare,
   Webhook,
   Music2,
-  Link2
+  Link2,
+  Network
 } from 'lucide-react';
 
 const menuItems = [
@@ -37,6 +38,12 @@ const menuItems = [
     icon: Link2,
     path: '/link-shortener',
     badge: 'جديد'
+  },
+  {
+    title: 'مساحة الوكلاء',
+    icon: Network,
+    path: '/ai-workspace',
+    badge: 'AI'
   },
   {
     title: 'الرسائل',

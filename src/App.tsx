@@ -63,6 +63,7 @@ const TikTokLinkPage = lazy(() => import('./pages/TikTokLinkPage'));
 const FormsManagerPage = lazy(() => import('./pages/FormsManagerPage'));
 const LinkShortenerPage = lazy(() => import('./pages/LinkShortenerPage'));
 const ShortLinkRedirectPage = lazy(() => import('./pages/ShortLinkRedirectPage'));
+const AIAgentsChatPage = lazy(() => import('./pages/AIAgentsChatPage'));
 const ContentSectionPage = lazy(() => import('./content/lib/ContentPages').then((m) => ({ default: m.ContentSectionPage })));
 const ContentArticlePage = lazy(() => import('./content/lib/ContentPages').then((m) => ({ default: m.ContentArticlePage })));
 
@@ -171,6 +172,7 @@ function App() {
                         <Route path="/meta-accounts" element={adminPage(<MetaAccountsPage />)} />
                         <Route path="/internal-webhook" element={adminPage(<InternalWebhookPage />)} />
                         <Route path="/link-shortener" element={adminPage(<LinkShortenerPage />)} />
+                        <Route path="/ai-workspace" element={adminPage(<AIAgentsChatPage />)} />
                       </Route>
 
                       <Route path="*" element={<NotFound />} />
