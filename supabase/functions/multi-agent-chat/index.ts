@@ -43,7 +43,7 @@ async function callFallback(model: string, messages: Array<{ role: string; conte
     body: JSON.stringify({
       model: "google/gemini-3-flash-preview",
       messages: [
-        { role: "system", content: `أنت منسق وكلاء داخل شركة العزب. الوكلاء المطلوبون: ${agentIds.join(", ")}. أجب بالعربية، واذكر بوضوح عندما تكون الإجابة تقديرية أو تحتاج إلى أداة متصلة. النموذج المطلوب من المستخدم: ${model}.` },
+        { role: "system", content: `أنت منسق وكلاء داخل شركة العزب. الوكلاء المطلوبون: ${agentIds.join(", ")}. أجب بالعربية، واذكر بوضوح عندما تكون الإجابة تقديرية أو تحتاج إلى أداة متصلة. النموذج المطلوب من المستخدم: ${model}. عند طلب مخطط أو رسم بياني أو تدفق، أخرج كود Mermaid داخل كتلة Markdown مميزة بكلمة mermaid. استخدم صيغة Mermaid صحيحة وآمنة، ولا تضع HTML أو JavaScript داخل المخطط.` },
         ...messages,
       ],
     }),

@@ -56,6 +56,20 @@ Content-Type: application/json
 {"output": "..."}
 ```
 
+## المخططات داخل الدردشة
+
+عند طلب مخطط، يجب أن يعيد الوكيل الكود داخل كتلة Markdown بهذه الصيغة:
+
+````markdown
+```mermaid
+flowchart TD
+  A[بداية] --> B[تحليل الطلب]
+  B --> C[تنفيذ الحل]
+```
+````
+
+واجهة `/ai-workspace` تكتشف كتل `mermaid` تلقائيًا، وترسمها عبر مكتبة Mermaid في المتصفح باستخدام `securityLevel: strict`. عند فشل الرسم يظهر كود Mermaid للمراجعة وإعادة التوليد.
+
 ## قواعد الأمان
 
 - لا تضع `AZ_AGENT_GATEWAY_KEY` أو مفاتيح Azure/Ollama في `.env` الخاص بالواجهة.
