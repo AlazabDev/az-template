@@ -48,7 +48,6 @@ FRONTEND_REQUIRED=(
   '@types/node@26.2.0'
   '@types/react@19.2.18'
   '@types/react-dom@19.2.5'
-  'lovable-tagger@1.3.3'
   'tailwindcss@3.4.19'
   'vite-plugin-pwa@1.3.0'
 )
@@ -83,7 +82,6 @@ pnpm add -D \
   @types/node@26.2.0 \
   @types/react@19.2.18 \
   @types/react-dom@19.2.5 \
-  lovable-tagger@1.3.3 \
   tailwindcss@3.4.19 \
   vite-plugin-pwa@1.3.0
 

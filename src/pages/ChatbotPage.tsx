@@ -53,6 +53,14 @@ const ChatbotPage: React.FC = () => {
         throw new Error(err.error || `Error ${resp.status}`);
       }
 
+      if (resp.headers.get('content-type')?.includes('application/json')) {
+        const payload = await resp.json();
+        const content = payload.content || payload.response || payload.output;
+        if (!content) throw new Error('لم يرجع الوكيل محتوى صالحًا');
+        setMessages(prev => [...prev, { role: 'assistant', content }]);
+        return;
+      }
+
       if (!resp.body) throw new Error('No response body');
 
       const reader = resp.body.getReader();

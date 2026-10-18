@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react-swc";
-import { componentTagger } from "lovable-tagger";
 import viteCompression from "vite-plugin-compression";
 
 export default defineConfig(({ mode }) => ({
@@ -11,7 +10,6 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === 'development' && componentTagger(),
     mode === 'production' && viteCompression({ algorithm: 'gzip', ext: '.gz' }),
     mode === 'production' && viteCompression({ algorithm: 'brotliCompress', ext: '.br' }),
   ].filter(Boolean),

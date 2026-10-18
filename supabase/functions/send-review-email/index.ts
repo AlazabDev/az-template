@@ -57,7 +57,7 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    const reviewLink = `${Deno.env.get("SITE_URL") || "https://alazab-docs.lovable.app"}/review/${documentId}?token=${reviewer.access_hash}`;
+    const reviewLink = `${Deno.env.get("SITE_URL") || "https://alazab.com"}/review/${documentId}?token=${reviewer.access_hash}`;
 
     // Send email using Resend HTTP API directly
     const emailResponse = await fetch("https://api.resend.com/emails", {

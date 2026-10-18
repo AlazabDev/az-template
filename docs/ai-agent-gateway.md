@@ -2,10 +2,6 @@
 
 مساحة الوكلاء موجودة في المسار `/ai-workspace` وهي محمية للمشرفين. الواجهة لا تضع أي مفتاح سري في المتصفح؛ كل الاتصال يمر عبر Edge Function باسم `multi-agent-chat`.
 
-## تشغيل fallback
-
-إذا لم يتم ضبط `AZ_AGENT_GATEWAY_URL`، تستخدم الدالة نموذج fallback الموجود أصلًا عبر `LOVABLE_API_KEY`. هذا الوضع مناسب للمعاينة فقط؛ لا يمثل اتصالًا فعليًا بالوكلاء المسجلين.
-
 ## تشغيل بوابة الوكلاء
 
 اضبط الأسرار في بيئة Supabase Edge Functions:
@@ -15,7 +11,7 @@ AZ_AGENT_GATEWAY_URL=https://your-agent-gateway.example.com/v1
 AZ_AGENT_GATEWAY_KEY=server-side-secret
 ```
 
-`LOVABLE_API_KEY` يبقى مطلوبًا كـ fallback اختياري إذا أردت استمرار المعاينة عند توقف البوابة.
+بدون `AZ_AGENT_GATEWAY_URL` ترفض الدالة الطلب برسالة إعداد واضحة؛ لا توجد خدمة ذكاء اصطناعي خارجية أو fallback داخل المشروع.
 
 ## عقد الطلب
 

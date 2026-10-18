@@ -8,7 +8,8 @@ interface SEOProps {
 
 export function SEO({ title, description }: SEOProps) {
   const { pathname } = useLocation();
-  const url = `https://azab-docs.lovable.app${pathname}`;
+  const baseUrl = import.meta.env.VITE_SITE_URL || 'https://alazab.com';
+  const url = `${baseUrl.replace(/\/$/, '')}${pathname}`;
   return (
     <Helmet>
       <title>{title}</title>

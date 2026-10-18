@@ -12,8 +12,9 @@ serve(async (req) => {
 
   try {
     const { messages, conversationId } = await req.json();
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+    const gatewayUrl = Deno.env.get("AZ_AGENT_GATEWAY_URL");
+    const gatewayKey = Deno.env.get("AZ_AGENT_GATEWAY_KEY");
+    if (!gatewayUrl) throw new Error("AZ_AGENT_GATEWAY_URL is not configured");
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -82,16 +83,17 @@ ${knowledgeContext || "لا توجد بيانات تدريب إضافية حال
    - للنظام الثاني والثالث، اشرح الخطوات واطلب التواصل مع الإدارة
    - انصح العميل بالتواصل مع الإدارة الهندسية للحصول على عرض سعر رسمي`;
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const response = await fetch(`${gatewayUrl.replace(/\/$/, "")}/agents/az-agent-azabot/chat`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        ...(gatewayKey ? { Authorization: `Bearer ${gatewayKey}` } : {}),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        agent_id: "az-agent-azabot",
+        model: "GPT-5.6-Sol",
         messages: [{ role: "system", content: systemPrompt }, ...messages],
-        stream: true,
+        tools: ["File Search", "Azure AI Search"],
       }),
     });
 
@@ -102,22 +104,18 @@ ${knowledgeContext || "لا توجد بيانات تدريب إضافية حال
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      if (response.status === 402) {
-        return new Response(JSON.stringify({ error: "يرجى إضافة رصيد لاستخدام الذكاء الاصطناعي." }), {
-          status: 402,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
       const t = await response.text();
-      console.error("AI gateway error:", response.status, t);
+      console.error("Agent gateway error:", response.status, t);
       return new Response(JSON.stringify({ error: "خطأ في خدمة الذكاء الاصطناعي" }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    return new Response(response.body, {
-      headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
+    const payload = await response.json();
+    const content = payload.content || payload.response || payload.output || payload.choices?.[0]?.message?.content;
+    return new Response(JSON.stringify({ content: content || "لم يرجع الوكيل محتوى." }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
     console.error("chatbot error:", e);

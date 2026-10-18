@@ -34,25 +34,6 @@ async function callConfiguredAgent(agentId: string, model: string, messages: unk
   return normalizeResult(agentId, await response.json());
 }
 
-async function callFallback(model: string, messages: Array<{ role: string; content: string }>, agentIds: string[]) {
-  const key = Deno.env.get("LOVABLE_API_KEY");
-  if (!key) throw new Error("لم يتم إعداد بوابة الوكلاء أو نموذج fallback.");
-  const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: "google/gemini-3-flash-preview",
-      messages: [
-        { role: "system", content: `أنت منسق وكلاء داخل شركة العزب. الوكلاء المطلوبون: ${agentIds.join(", ")}. أجب بالعربية، واذكر بوضوح عندما تكون الإجابة تقديرية أو تحتاج إلى أداة متصلة. النموذج المطلوب من المستخدم: ${model}. عند طلب مخطط أو رسم بياني أو تدفق، أخرج كود Mermaid داخل كتلة Markdown مميزة بكلمة mermaid. استخدم صيغة Mermaid صحيحة وآمنة، ولا تضع HTML أو JavaScript داخل المخطط.` },
-        ...messages,
-      ],
-    }),
-  });
-  if (!response.ok) throw new Error("تعذر الاتصال بنموذج fallback");
-  const payload = await response.json();
-  return payload.choices?.[0]?.message?.content || "لم يرجع النموذج محتوى.";
-}
-
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
   try {
@@ -63,10 +44,8 @@ serve(async (req) => {
     const toolIds = Array.isArray(body.toolIds) ? body.toolIds.filter((id: unknown): id is string => typeof id === "string").slice(0, 20) : [];
     if (!messages.length || !agentIds.length) throw new Error("يجب إرسال رسالة واختيار وكيل واحد على الأقل.");
 
-    const gatewayConfigured = Boolean(Deno.env.get("AZ_AGENT_GATEWAY_URL"));
-    if (!gatewayConfigured) {
-      const content = await callFallback(model, messages, agentIds);
-      return new Response(JSON.stringify({ mode: "fallback", responses: [{ agentId: agentIds[0], content }] }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    if (!Deno.env.get("AZ_AGENT_GATEWAY_URL")) {
+      return new Response(JSON.stringify({ error: "بوابة الوكلاء غير مهيأة. اضبط AZ_AGENT_GATEWAY_URL في بيئة Supabase." }), { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
     const settled = await Promise.allSettled(agentIds.map((agentId) => callConfiguredAgent(agentId, model, messages, toolIds)));
